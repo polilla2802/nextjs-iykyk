@@ -208,7 +208,7 @@ export default function ContentForm() {
 						>
 							<tbody height="100%">
 								<tr height="100%">
-									<td width="60%" className="align-bottom pb-10 lg:pb-5 pl-5 md:pl-10">
+									<td width="60%" className="align-bottom pb-5 pl-5 md:pl-10">
 										<div>
 											<p className="py-0 my-0 leading-4 text-left capitalize">
 												{formData.NAME !== "" ? formData.NAME : "NOMBRE"}
@@ -224,9 +224,9 @@ export default function ContentForm() {
 											</p>
 										</div>
 									</td>
-									<td width="40%" className={`${styles.socio} align-bottom pb-10 lg:pb-5 pr-5 md:pr-10`}>
+									<td width="40%" className={`${styles.socio} align-bottom pb-5 pr-5 md:pr-10`}>
 										<div>
-											<p className="py-0 text-left capitalize">
+											<p className="py-0 text-left capitalize whitespace-nowrap">
 												CÓDIGO DE SOCIO
 											</p>
 											<p className="py-0 text-left capitalize">
