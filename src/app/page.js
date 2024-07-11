@@ -1,8 +1,9 @@
 // src/app/page.js
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-import { storage } from "../app/lib/firebase";
+import { storage } from "../lib/firebase";
+import ContentForm from "./components/ContentForm";
 
 export default function Home() {
   const [file, setFile] = useState(null);
@@ -38,16 +39,19 @@ export default function Home() {
   };
 
   return (
-    <div>
-      <h1>Firebase Storage Upload</h1>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleUpload}>Upload</button>
-      <p>Upload Progress: {progress}%</p>
-      {downloadURL && (
-        <p>
-          Download URL: <a href={downloadURL}>{downloadURL}</a>
-        </p>
-      )}
-    </div>
+    <>
+      <section className="container m-auto px-4 py-4">
+        <h1 className="text-8xl">IYKYK</h1>
+        <input type="file" onChange={handleFileChange} />
+        <button onClick={handleUpload}>Upload</button>
+        <p>Upload Progress: {progress}%</p>
+        {downloadURL && (
+          <p>
+            Download URL: <a href={downloadURL}>{downloadURL}</a>
+          </p>
+        )}
+        <ContentForm />
+      </section>
+    </>
   );
 }
