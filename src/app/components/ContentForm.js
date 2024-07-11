@@ -106,8 +106,8 @@ export default function ContentForm() {
 
 	return (
 		<div className="grid-cols-2 lg:grid justify-items-center mt-10">
-			<div className="w-full p-2 my-3 bg-white rounded-lg shadow-2xl md:w-2/3">
-				<div className="w-full p-2 my-3 bg-white">
+			<div className="w-full mx-auto p-2 mb-10 bg-white rounded-lg shadow-2xl md:w-2/3">
+				<div className="w-full bg-white">
 					<form
 						className="px-8 pt-6 pb-8 mb-4 bg-white"
 						onSubmit={handleSubmit}
