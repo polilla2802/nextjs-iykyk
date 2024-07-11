@@ -42,6 +42,7 @@ export default function Home() {
     <>
       <section className="container m-auto px-4 py-4">
         <h1 className="text-8xl">IYKYK</h1>
+        <p>Sube tu documento en png/pdf</p>
         <input type="file" onChange={handleFileChange} />
         <button onClick={handleUpload}>Upload</button>
         <p>Upload Progress: {progress}%</p>

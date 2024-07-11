@@ -84,3 +84,8 @@ h1{
 label, input, select{
 	color: black;
 }
+
+input, p{
+	font-family: "FormaDJRBanner-Regular";
+	letter-spacing: 2px;
+}

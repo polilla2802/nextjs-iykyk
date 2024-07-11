@@ -1,16 +1,17 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
-import html2canvas from "html2canvas";
-import html2pdf from "html2pdf.js";
+import dynamic from 'next/dynamic';
 import styles from "./ContentForm.module.css"; // Import the CSS module
+
+// Dynamically import html2canvas and html2pdf
+const html2canvas = dynamic(() => import("html2canvas"), { ssr: false });
+const html2pdf = dynamic(() => import("html2pdf.js"), { ssr: false });
 
 export default function ContentForm() {
 	const [isMounted, setIsMounted] = useState(false);
 	const membershipType = { 1: "ANUAL", 2: "IYKYK", 3: "MENSUAL" };
-	// const priceProduct = product[prices[user.typePrice]];
-	// console.log(priceProduct);
 	const data = {
-		membership: membershipType[0],
+		membership: membershipType[1],
 	};
 	const [formData, setFormData] = useState({
 		NAME: "",
@@ -19,7 +20,6 @@ export default function ContentForm() {
 		DOCUMENTID: "",
 	});
 
-	// const [imageData, setImageData] = useState(null);
 	const tableRef = useRef();
 
 	const handleCapture = async () => {
@@ -32,17 +32,14 @@ export default function ContentForm() {
 			const randomString = Math.random().toString(36).substring(2, 18);
 			data.imgName = `${timestamp}_${randomString}.png`;
 			data.imgContent = dataUrl;
-			// console.log(res.imageName);
 		} catch (error) {
 			console.error("Error:", error);
 		}
 	};
 
 	const handleOpenPDF = async () => {
-		// Obtén el elemento de la tabla por su id o clase
 		const element = document.getElementById("tarjeta");
 
-		// Configura las opciones para la generación del PDF
 		const options = {
 			margin: 10,
 			filename: "documento.pdf",
@@ -61,20 +58,19 @@ export default function ContentForm() {
 			...formData,
 			[e.target.name]: e.target.value,
 		});
-		// console.log(dataForm);
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (
-			!formData.NOMBRE ||
+			!formData.NAME ||
 			!formData.MEMBERSHIPTYPE ||
 			!formData.BIRTHDAY ||
 			!formData.DOCUMENTID
 		) {
 			const camposVacios = [];
 
-			if (!formData.NOMBRE) {
+			if (!formData.NAME) {
 				camposVacios.push("Nombre");
 			}
 
@@ -83,13 +79,12 @@ export default function ContentForm() {
 			}
 
 			if (!formData.BIRTHDAY) {
-				camposVacios.push("Cumpelaños");
+				camposVacios.push("Cumpleaños");
 			}
 
 			if (!formData.DOCUMENTID) {
 				camposVacios.push("Número de Documento");
 			}
-			// console.log(e);
 			const mensaje = `Por favor, completa los siguientes campos obligatorios: ${camposVacios.join(
 				", ",
 			)}.`;
@@ -99,12 +94,15 @@ export default function ContentForm() {
 		}
 		await handleCapture();
 		data.formData = formData;
-		// window.location.href = `/${lang}/dashboard/thankyou?saleId=${data.sale.id}&email=${primaryEmail}`;
 	};
 
 	useEffect(() => {
 		setIsMounted(true);
 	}, []);
+
+	if (!isMounted) {
+		return null;
+	}
 
 	return (
 		<div className="grid-cols-2 gap-10 lg:grid justify-items-center mt-10">
@@ -121,7 +119,6 @@ export default function ContentForm() {
 								className="block mb-2 text-sm font-bold text-primaryBlue"
 							>
 								NOMBRE:
-
 								<i className="font-light">
 									<span className="text-red-700"> *</span>
 								</i>
@@ -142,7 +139,6 @@ export default function ContentForm() {
 								htmlFor="MEMBERSHIPTYPE"
 								className="block my-2 text-sm font-bold text-primaryBlue"
 							>
-								{/* {lang[params.lang]["visibility"]}: */}
 								MEMBRESIA:
 								<i className="font-light">
 									<span className="text-red-700"> *</span>
@@ -155,17 +151,10 @@ export default function ContentForm() {
 								className="w-full px-3 py-2 border shadow"
 								required
 							>
-								<option value="">Seleccionar
-								</option>
-								<option value="ANUAL">
-									ANUAL
-								</option>
-								<option value="IYKYK">
-									IYKYK
-								</option>
-								<option value="MENSUAL">
-									MENSUAL
-								</option>
+								<option value="">Seleccionar</option>
+								<option value="ANUAL">ANUAL</option>
+								<option value="IYKYK">IYKYK</option>
+								<option value="MENSUAL">MENSUAL</option>
 							</select>
 						</>
 
@@ -207,60 +196,63 @@ export default function ContentForm() {
 								required
 							/>
 						</>
-
-						{/* <button type="submit">Submit</button> */}
 					</form>
 				</div>
-				{/* <ContentForm /> */}
 			</div>
 			<div>
 				<div className={`${styles.membership}`} ref={tableRef} id="tarjeta">
 					<>
 						<table
 							background={"/images/membership-final.png"}
-							className="bg-no-repeat bg-cover"
+							className="bg-no-repeat bg-cover rounded-2xl"
 							width="498"
 							height="275"
 						>
 							<tbody height="100%">
 								<tr height="100%">
-									<td width="60%" className="pl-10">
-										<p className="py-0 pt-5 my-0 font-bold text-left capitalize">
-											{formData.NAME != "" ? formData.NAME : "NOMBRE"}
-										</p>
-										<p className="py-0 pt-5 my-0 leading-4 text-left capitalize">
-											{formData.MEMBERSHIPTYPE != "" ? formData.MEMBERSHIPTYPE : "MEMBRESIA"}
-										</p>
-										<p className="py-0 pt-5 my-0 leading-4 text-left capitalize">
-											{formData.BIRTHDAY != "" ? formData.BIRTHDAY : "CUMPLEAÑOS"}
-										</p>
-										<p className="py-0 pt-5 my-0 leading-4 text-left capitalize">
-											{formData.DOCUMENTID != "" ? formData.DOCUMENTID : "NÚMERO DE DOCUMENTO"}
-										</p>
+									<td width="60%" className="align-bottom pb-5 pl-10">
+										<div>
+											<p className="py-0 pt-5 my-0 font-bold text-left capitalize">
+												{formData.NAME !== "" ? formData.NAME : "NOMBRE"}
+											</p>
+											<p className="py-0 pt-5 my-0 leading-4 text-left capitalize">
+												{formData.MEMBERSHIPTYPE !== "" ? formData.MEMBERSHIPTYPE : "MEMBRESIA"}
+											</p>
+											<p className="py-0 pt-5 my-0 leading-4 text-left capitalize">
+												{formData.BIRTHDAY !== "" ? formData.BIRTHDAY : "CUMPLEAÑOS"}
+											</p>
+											<p className="py-0 pt-5 my-0 leading-4 text-left capitalize">
+												{formData.DOCUMENTID !== "" ? formData.DOCUMENTID : "NÚMERO DE DOCUMENTO"}
+											</p>
+										</div>
 									</td>
-									<td width="40%" className="align-bottom">
-										<p className="py-0 mb-8 leading-4 text-left capitalize">
-											CÓDIGO DE SOCIO
-										</p>
+									<td width="40%" className={`${styles.socio} align-bottom pb-5 pr-5`}>
+										<div>
+											<p className="py-0 leading-4 text-left capitalize">
+												CÓDIGO DE SOCIO
+											</p>
+											<p className="py-0 leading-4 text-left capitalize">
+												0000000000000
+											</p>
+										</div>
 									</td>
 								</tr>
 							</tbody>
 						</table>
 					</>
 				</div>
-				<p className="pb-5">
+				<p className="pt-5 text-center">
 					Esta representación es lo mas cercano posible a la tarjeta final
 				</p>
 				<div className="flex flex-col items-center mt-6">
 					<div className="w-full mb-4">
 						<button
 							onClick={handleOpenPDF}
-							className="block w-full px-4 py-2 text-xs text-center text-white shadow bg-primaryBlue md:text-sm"
+							className="block uppercase whitespace-nowrap font-formaBold tracking-widest w-min m-auto px-4 py-2 text-xs text-center text-white shadow bg-primaryBlue md:text-sm"
 						>
 							Generar PDF
 						</button>
 					</div>
-
 				</div>
 			</div>
 		</div>
