@@ -67,4 +67,8 @@
 	.membership p{
 		padding-top: 10px;
 	}
+
+	.socio p{
+		padding-top: 0px;
+	}
 }
