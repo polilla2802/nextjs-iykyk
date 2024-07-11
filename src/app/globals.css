@@ -2,6 +2,49 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+	font-family: 'FormaDJRBanner-Light';
+	src: url('../fonts/forma/FormaDJRBanner-Light.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'FormaDJRBanner-Regular';
+	src: url('../fonts/forma/FormaDJRBanner-Regular.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'FormaDJRBanner-Medium';
+	src: url('../fonts/forma/FormaDJRBanner-Medium.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'FormaDJRBanner-Bold';
+	src: url('../fonts/forma/FormaDJRBanner-Bold.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'FormaDJRBanner-Extra-Bold';
+	src: url('../fonts/forma/FormaDJRBanner-Extra-Bold.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'FormaDJRBanner-Black';
+	src: url('../fonts/forma/FormaDJRBanner-Black.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -30,4 +73,14 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+h1{
+  letter-spacing: 1rem;
+  text-transform: uppercase;
+  font-family: "FormaDJRBanner-Black", sans-serif;
+}
+
+label, input, select{
+	color: black;
 }

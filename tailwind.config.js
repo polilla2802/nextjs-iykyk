@@ -7,6 +7,14 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        formaLight: ['FormaDJRBanner-Light', 'sans-serif'],
+        formaRegular: ['FormaDJRBanner-Regular', 'sans-serif'],
+        formaMedium: ['FormaDJRBanner-Medium', 'sans-serif'],
+        formaBold: ['FormaDJRBanner-Bold', 'sans-serif'],
+        formaExtraBold: ['FormaDJRBanner-Extra-Bold', 'sans-serif'],
+        formaBlack: ['FormaDJRBanner-Black', 'sans-serif'],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
