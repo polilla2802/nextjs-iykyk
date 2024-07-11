@@ -105,7 +105,7 @@ export default function ContentForm() {
 	}
 
 	return (
-		<div className="grid-cols-2 gap-10 lg:grid justify-items-center mt-10">
+		<div className="grid-cols-2 lg:grid justify-items-center mt-10">
 			<div className="w-full p-2 my-3 bg-white rounded-lg shadow-2xl md:w-2/3">
 				<div className="w-full p-2 my-3 bg-white">
 					<form
@@ -224,7 +224,7 @@ export default function ContentForm() {
 											</p>
 										</div>
 									</td>
-									<td width="40%" className={`${styles.socio} align-bottom pb-5 pr-5 md:pr-10`}>
+									<td width="40%" className={`${styles.socio} align-bottom pb-5 pr-5`}>
 										<div>
 											<p className="py-0 text-left capitalize whitespace-nowrap">
 												CÓDIGO DE SOCIO
