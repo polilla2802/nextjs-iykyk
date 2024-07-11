@@ -208,9 +208,9 @@ export default function ContentForm() {
 						>
 							<tbody height="100%">
 								<tr height="100%">
-									<td width="60%" className="align-bottom pb-10 lg:pb-5 pl-10">
+									<td width="60%" className="align-bottom pb-10 lg:pb-5 pl-5 md:pl-10">
 										<div>
-											<p className="py-0 my-0 font-bold text-left capitalize">
+											<p className="py-0 my-0 leading-4 text-left capitalize">
 												{formData.NAME !== "" ? formData.NAME : "NOMBRE"}
 											</p>
 											<p className="py-0 my-0 leading-4 text-left capitalize">
