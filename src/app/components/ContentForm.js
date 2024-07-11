@@ -204,34 +204,32 @@ export default function ContentForm() {
 					<>
 						<table
 							background={"/images/membership-final.png"}
-							className="bg-no-repeat bg-cover rounded-2xl"
-							width="498"
-							height="275"
+							className="bg-no-repeat bg-cover bg-center rounded-2xl"
 						>
 							<tbody height="100%">
 								<tr height="100%">
-									<td width="60%" className="align-bottom pb-5 pl-10">
+									<td width="60%" className="align-bottom pb-10 lg:pb-5 pl-10">
 										<div>
-											<p className="py-0 pt-5 my-0 font-bold text-left capitalize">
+											<p className="py-0 my-0 font-bold text-left capitalize">
 												{formData.NAME !== "" ? formData.NAME : "NOMBRE"}
 											</p>
-											<p className="py-0 pt-5 my-0 leading-4 text-left capitalize">
+											<p className="py-0 my-0 leading-4 text-left capitalize">
 												{formData.MEMBERSHIPTYPE !== "" ? formData.MEMBERSHIPTYPE : "MEMBRESIA"}
 											</p>
-											<p className="py-0 pt-5 my-0 leading-4 text-left capitalize">
+											<p className="py-0 my-0 leading-4 text-left capitalize">
 												{formData.BIRTHDAY !== "" ? formData.BIRTHDAY : "CUMPLEAÑOS"}
 											</p>
-											<p className="py-0 pt-5 my-0 leading-4 text-left capitalize">
+											<p className="py-0 my-0 leading-4 text-left capitalize">
 												{formData.DOCUMENTID !== "" ? formData.DOCUMENTID : "NÚMERO DE DOCUMENTO"}
 											</p>
 										</div>
 									</td>
-									<td width="40%" className={`${styles.socio} align-bottom pb-5 pr-5`}>
+									<td width="40%" className={`${styles.socio} align-bottom pb-10 lg:pb-5 pr-5 md:pr-10`}>
 										<div>
-											<p className="py-0 leading-4 text-left capitalize">
+											<p className="py-0 text-left capitalize">
 												CÓDIGO DE SOCIO
 											</p>
-											<p className="py-0 leading-4 text-left capitalize">
+											<p className="py-0 text-left capitalize">
 												0000000000000
 											</p>
 										</div>
