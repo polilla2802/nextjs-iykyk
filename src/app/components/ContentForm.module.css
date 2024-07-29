@@ -26,6 +26,17 @@
 	width: 100%;
 }
 
+.tableHeight table{
+	height: 400px!important;
+      }
+
+@media only screen and (max-width: 1280px) {
+	.membership table{
+		height: 300px;
+	}
+}
+
+
 @media only screen and (max-width: 1024px) {
 	.membership table{
 		height: 400px;
@@ -43,7 +54,7 @@
 
 @media only screen and (max-width: 768px) {
 	.membership table{
-		height: 400px;
+		height: 350px;
 	}
 
 	.membership p{
@@ -61,7 +72,7 @@
 	}
 
 	.membership table{
-		height: 400px;
+		height: 260px;
 	}
 
 	.membership p{
