@@ -31,15 +31,7 @@ export async function GET(request) {
 
 export async function POST(request) {
   const data = await request.formData();
-  const documentIdValue = data.get('documentId');
   const documentUrlValue = data.get('documentUrl');
-
-  if (!documentIdValue) {
-    return NextResponse.json(
-      { message: "DocumentId Error" },
-      { status: 500 }
-    );
-  }
 
   if (!documentUrlValue) {
     return NextResponse.json(
@@ -48,27 +40,11 @@ export async function POST(request) {
     );
   }
 
-  const documentId = parseInt(documentIdValue);
   const documentUrl = documentUrlValue;
   try {
 
-    // Check if email or username already exist
-    const existingDocument = await prisma.document.findFirst({
-      where: {
-        id: documentId
-      },
-    });
-
-    if (existingDocument) {
-      return NextResponse.json(
-        { message: "Existing Document Error" },
-        { status: 500 }
-      );
-    }
-
     const documentValue = await prisma.document.create({
       data: {
-        id: documentId,
         documentUrl: documentUrl
       },
     });
@@ -88,7 +64,7 @@ export async function POST(request) {
   } catch (err) {
     console.log(err);
     return NextResponse.json(
-      { message: err.message},
+      { message: err.message },
       { status: 500 }
     );
   }

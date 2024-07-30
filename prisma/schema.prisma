@@ -31,7 +31,7 @@ model Membership {
 }
 
 model Document {
-  id          BigInt      @id
+  id          BigInt      @id @default(autoincrement())
   documentUrl String      @db.String(1024)
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt

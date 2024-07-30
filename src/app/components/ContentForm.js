@@ -2,8 +2,9 @@
 import styles from "./ContentForm.module.css"; // Import the CSS module
 import toast from "react-hot-toast";
 import { useState, useRef, useEffect } from "react";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-export default function ContentForm() {
+import { storage } from "@/lib/firebase";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+export default function ContentForm({ documentId }) {
 	const [isMounted, setIsMounted] = useState(false);
 	const membershipType = { 1: "ANUAL", 2: "IYKYK", 3: "MENSUAL" };
 	const data = {
@@ -69,7 +70,6 @@ export default function ContentForm() {
 					document.body.removeChild(link);
 
 					// Upload the Blob to Firebase Storage
-					const storage = getStorage();
 					const storageRef = ref(storage, `images/${filename}`);
 					const snapshot = await uploadBytes(storageRef, blob);
 					console.log('Uploaded a blob or file!');
