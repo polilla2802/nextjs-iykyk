@@ -27,6 +27,7 @@ async function main() {
 			data: {
 				id: m.id,
 				documentId: m.documentId,
+				membershipUrl: m.membershipUrl,
 				type: m.type,
 				createdAt: new Date(),
 				updatedAt: new Date()

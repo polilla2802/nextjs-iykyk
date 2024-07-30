@@ -20,13 +20,14 @@ model user {
 }
 
 model Membership {
-  id         BigInt    @id
-  users      user[]
-  type       String    @db.String(255)
-  documentId BigInt?   @unique
-  document   Document? @relation(fields: [documentId], references: [id])
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id            BigInt    @id
+  users         user[]
+  type          String    @db.String(255)
+  membershipUrl String    @db.String(1024)
+  documentId    BigInt?   @unique
+  document      Document? @relation(fields: [documentId], references: [id])
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Document {

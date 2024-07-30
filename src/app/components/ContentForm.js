@@ -2,7 +2,7 @@
 import styles from "./ContentForm.module.css"; // Import the CSS module
 import toast from "react-hot-toast";
 import { useState, useRef, useEffect } from "react";
-
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 export default function ContentForm() {
 	const [isMounted, setIsMounted] = useState(false);
 	const membershipType = { 1: "ANUAL", 2: "IYKYK", 3: "MENSUAL" };
@@ -45,13 +45,53 @@ export default function ContentForm() {
 		}
 	};
 
+	const handleSaveAsPNG = async () => {
+		const html2canvas = (await import("html2canvas")).default;
+
+		const element = document.getElementById("tarjeta");
+		const randomString = Math.random().toString(36).substring(2, 18);
+		const timestamp = Date.now();
+		const filename = `${timestamp}_${randomString}_IYKYK.png`;
+
+		try {
+			// Capture the element as a canvas
+			const canvas = await html2canvas(element, { scale: 3, quality: 1 });
+
+			// Convert the canvas to a Blob
+			canvas.toBlob(async (blob) => {
+				if (blob) {
+					// Create a download link for local saving
+					const link = document.createElement('a');
+					link.href = URL.createObjectURL(blob);
+					link.download = filename;
+					document.body.appendChild(link);
+					link.click();
+					document.body.removeChild(link);
+
+					// Upload the Blob to Firebase Storage
+					const storage = getStorage();
+					const storageRef = ref(storage, `images/${filename}`);
+					const snapshot = await uploadBytes(storageRef, blob);
+					console.log('Uploaded a blob or file!');
+
+					// Get the download URL
+					const downloadURL = await getDownloadURL(snapshot.ref);
+					console.log('File available at', downloadURL);
+				}
+			}, 'image/png', 0.98);
+		} catch (error) {
+			console.error("Error:", error);
+		}
+	};
+
 	const handleOpenPDF = async () => {
 		const element = document.getElementById("tarjeta");
-
+		const randomString = Math.random().toString(36).substring(2, 18);
+		const timestamp = Date.now();
 		const options = {
 			margin: 10,
-			filename: "IYKYK.pdf",
-			image: { type: "png", quality: 1 },
+			filename: `${timestamp}_${randomString}_IYKYK.png`,
+			image: { type: "png", quality: .98 },
 			html2canvas: { scale: 3 },
 			jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
 		};
@@ -59,8 +99,17 @@ export default function ContentForm() {
 		try {
 			const html2pdf = (await import("html2pdf.js")).default;
 			element.classList.add(styles.tableHeight); // Add the height class
-			await html2pdf().set(options).from(element).save();
+			const pdfBlob = await html2pdf().set(options).from(element).save();
 			element.classList.remove(styles.tableHeight); // Remove the height class
+			// Upload the PDF blob to Firebase Storage
+			const storage = getStorage();
+			const storageRef = ref(storage, `pdfs/${options.filename}`);
+			const snapshot = await uploadBytes(storageRef, pdfBlob);
+			console.log('Uploaded a blob or file!');
+
+			// Get the download URL
+			const downloadURL = await getDownloadURL(snapshot.ref);
+			console.log('File available at', downloadURL);
 		} catch (error) {
 			console.error("Error:", error);
 		}
@@ -107,7 +156,7 @@ export default function ContentForm() {
 			return;
 		} else {
 			data.formData = formData;
-			await handleOpenPDF();
+			await handleSaveAsPNG();
 		}
 	};
 
