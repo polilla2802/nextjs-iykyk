@@ -30,3 +30,71 @@ export async function GET(request) {
     );
   }
 }
+
+export async function POST(request) {
+  const data = await request.formData();
+  const membershipIdValue = data.get('membershipId');
+  const documentIdValue = data.get('documentId');
+  const typeValue = data.get('type');
+
+  if (!membershipIdValue) {
+    return NextResponse.json(
+      { message: "membershipIdValue not provided" },
+      { status: 500 }
+    );
+  }
+
+  if (!typeValue) {
+    return NextResponse.json(
+      { message: "typeValue not provided" },
+      { status: 500 }
+    );
+  }
+
+  const membershipId = parseInt(membershipIdValue);
+  const documentId = parseInt(documentIdValue);
+  const type = typeValue;
+  try {
+
+    // Check if email or username already exist
+    const existingMembership = await prisma.membership.findFirst({
+      where: {
+        id: membershipId
+      },
+    });
+
+    if (existingMembership) {
+      return NextResponse.json(
+        { message: "membership with the same membershipId already exists" },
+        { status: 500 }
+      );
+    }
+
+    const membershipValue = await prisma.membership.create({
+      data: {
+        id: membershipId,
+        documentId: documentId != null ? documentId : null,
+        type: type
+      },
+    });
+
+    // Serialize with the custom replacer to convert BigInt to Number
+    const serializedData = JSON.stringify(membershipValue, bigIntToString);
+
+    // Parse the serialized data back to an object (optional step)
+    const membership = JSON.parse(serializedData);
+
+    return NextResponse.json({ message: 'membership uploaded:', membership }, {
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+      },
+    });
+
+  } catch (err) {
+    console.log(err);
+    return NextResponse.json(
+      { message: err.message },
+      { status: 500 }
+    );
+  }
+}
