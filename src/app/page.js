@@ -9,7 +9,7 @@ export default function Home() {
       <section className="container px-4 py-4 m-auto">
         <h1 className="text-8xl">IYKYK</h1>
         <UpoloadDocument />
-        <ContentForm />
+        <ContentForm documentId={990613174861365249} />
       </section>
     </>
   );

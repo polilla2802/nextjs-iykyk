@@ -90,6 +90,9 @@ export async function POST(request) {
         birthday: new Date(birthday),
         firebaseUid: firebaseUid != null ? firebaseUid : null,
       },
+      include: {
+        membership: true
+      },
     });
 
     // Serialize with the custom replacer to convert BigInt to Number

@@ -34,12 +34,20 @@ export async function GET(request) {
 export async function POST(request) {
   const data = await request.formData();
   const membershipIdValue = data.get('membershipId');
+  const membershipUrlValue = data.get('membershipUrl');
   const documentIdValue = data.get('documentId');
   const typeValue = data.get('type');
 
   if (!membershipIdValue) {
     return NextResponse.json(
       { message: "membershipIdValue not provided" },
+      { status: 500 }
+    );
+  }
+
+  if (!membershipUrlValue) {
+    return NextResponse.json(
+      { message: "membershipUrlValue not provided" },
       { status: 500 }
     );
   }
@@ -52,7 +60,8 @@ export async function POST(request) {
   }
 
   const membershipId = parseInt(membershipIdValue);
-  const documentId = parseInt(documentIdValue);
+  const membershipUrl = membershipUrlValue;
+  const documentId = BigInt(documentIdValue);
   const type = typeValue;
   try {
 
@@ -73,8 +82,12 @@ export async function POST(request) {
     const membershipValue = await prisma.membership.create({
       data: {
         id: membershipId,
+        membershipUrl: membershipUrl,
         documentId: documentId != null ? documentId : null,
         type: type
+      },
+      include: {
+        document: true
       },
     });
 
