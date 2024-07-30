@@ -8,34 +8,31 @@ datasource db {
 }
 
 model user {
-  id          BigInt      @id @default(autoincrement())
-  memberId    BigInt      @unique
-  membership  Membership? @relation(fields: [memberId], references: [id])
-  firebaseUid String      @unique @db.String(255)
-  name        String      @db.String(255)
-  email       String      @unique @db.String(255)
-  phoneNumber String?     @db.String(20)
-  gender      String?     @db.String(50)
-  dateOfBirth DateTime?
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
+  id          BigInt     @id @default(autoincrement())
+  memberId    BigInt     @unique
+  membership  Membership @relation(fields: [memberId], references: [id])
+  name        String     @db.String(255)
+  email       String?    @db.String(255)
+  birthday    DateTime
+  firebaseUid String?    @unique @db.String(255)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 }
 
 model Membership {
-  id        BigInt     @id @default(autoincrement())
-  users     user[]
-  type      String     @unique @db.String(255)
-  documents Document[] // Relation to documents
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
+  id         BigInt    @id
+  users      user[]
+  type       String    @unique @db.String(255)
+  documentId BigInt    @unique
+  document   Document? @relation(fields: [documentId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }
 
 model Document {
-  id           BigInt     @id @default(autoincrement())
-  documentId   BigInt     @unique
-  documentUrl  String     @db.String(1024)
-  membershipId BigInt // Foreign key to Membership
-  membership   Membership @relation(fields: [membershipId], references: [id])
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
+  id           BigInt      @id
+  documentUrl  String      @db.String(1024)
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+  Membership   Membership?
 }
