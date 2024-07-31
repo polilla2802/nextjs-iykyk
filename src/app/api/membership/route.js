@@ -63,6 +63,11 @@ export async function POST(request) {
   const membershipUrl = membershipUrlValue;
   const documentId = BigInt(documentIdValue);
   const type = typeValue;
+
+  console.log(membershipId);
+  console.log(membershipUrl);
+  console.log(documentId);
+  console.log(type);
   try {
 
     // Check if email or username already exist

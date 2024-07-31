@@ -61,7 +61,7 @@ export default function ContentForm({ documentId }) {
       console.log(socioCode);
       console.log(documentId);
       console.log(formData.MEMBERSHIPTYPE);
-      
+
       const response = await fetch("/api/membership", {
         method: "POST",
         body: formData,
@@ -127,9 +127,9 @@ export default function ContentForm({ documentId }) {
 
     try {
       const html2pdf = (await import("html2pdf.js")).default;
-      element.classList.add(styles.tableHeight); 
+      element.classList.add(styles.tableHeight);
       const pdfBlob = await html2pdf().set(options).from(element).save();
-      element.classList.remove(styles.tableHeight); 
+      element.classList.remove(styles.tableHeight);
 
       const storageRef = ref(storage, `pdfs/${options.filename}`);
       const snapshot = await uploadBytes(storageRef, pdfBlob);
@@ -190,6 +190,7 @@ export default function ContentForm({ documentId }) {
   useEffect(() => {
     setIsMounted(true);
     generateSocioCode();
+    console.log(documentId);
   }, []);
 
   if (!isMounted) {
