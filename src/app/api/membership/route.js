@@ -61,7 +61,8 @@ export async function POST(request) {
 
   const membershipId = parseInt(membershipIdValue);
   const membershipUrl = membershipUrlValue;
-  const documentId = BigInt(documentIdValue);
+  console.log(documentIdValue);
+  const documentId = documentIdValue == null ? BigInt(documentIdValue) : null;
   const type = typeValue;
 
   console.log(membershipId);
